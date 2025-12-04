@@ -1,6 +1,6 @@
-public class Day1 : Day
+public class Day1 : Day<int[]>
 {
-    private int[] Input => Lines.Select(l => int.Parse(l[1..]) * (l[0] == 'L' ? -1 : 1)).ToArray();
+    protected override int[] Input => Lines.Select(l => int.Parse(l[1..]) * (l[0] == 'L' ? -1 : 1)).ToArray();
 
     protected override string RunAInternal()
     {

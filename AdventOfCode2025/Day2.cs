@@ -1,8 +1,8 @@
 namespace AdventOfCode2025;
 
-public class Day2 : Day
+public class Day2 : Day<(string from, string to)[]>
 {
-    private (string from, string to)[] Input => Lines.Select(l
+    protected override (string from, string to)[] Input => Lines.Select(l
             =>
         {
             var fromTo = l.Split('-');

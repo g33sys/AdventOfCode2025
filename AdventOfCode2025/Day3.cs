@@ -1,8 +1,8 @@
 namespace AdventOfCode2025;
 
-public class Day3 : Day
+public class Day3 : Day<(int b, int i)[][]>
 {
-    private (int b, int i)[][] Input =>
+    protected override (int b, int i)[][] Input =>
         Lines
             .Select(l => l
                 .Select((b, i) => (b: b - 48, i))

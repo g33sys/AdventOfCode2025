@@ -2,31 +2,51 @@ using System.Runtime.CompilerServices;
 using AdventOfCode2025;
 using Newtonsoft.Json;
 
-public abstract class Day
+public abstract class Day<TInput>
 {
-    protected string[] Lines { get; private set; }
+    private string _day;
+    private bool _test;
+    
+    protected abstract TInput Input { get; }
 
-    protected Day()
+    public Day()
     {
-        Lines = ReadLines(GetType().Name);
+        _day = GetType().Name;
     }
 
-    private static string[] ReadLines(string day)
+    public Day<TInput> Test()
     {
-        var path = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..","input", $"{day}.txt");
-        return File.ReadAllLines(path);
+        _test = true;
+        return this;
+    }
+
+    protected string[] Lines { get; private set; }
+
+    private void ReadLines(string day)
+    {
+        var folder = (_test ? "Test" : "") + "Input";
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", folder, $"{day}.txt");
+        Lines = File.ReadAllLines(path);
     }
 
     public string RunA()
     {
-        (GetType().Name + " Run A").Out();
+        InitRun();
         return RunAInternal();
     }
+    
     public string RunB()
     {
-        "Run B".Out();
+        InitRun();
         return RunBInternal();
     }
+
+    private void InitRun([CallerMemberName] string run = null)
+    {
+        ($"Day {_day[3..]} RUN {run[^1]}"+(_test?" (TEST MODE)":"")).Out();
+        ReadLines(GetType().Name);
+    }
+
 
     protected abstract string RunAInternal();
     protected abstract string RunBInternal();
