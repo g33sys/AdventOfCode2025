@@ -21,7 +21,6 @@ public class Day4 : Day<Place[]>
         {
             var x = i % width + 1;
             var y = i / width + 1;
-            Input[i].MarkPosition(x, y);
             if (x < width)
             {
                 Input[i].TalkTo(Input[i + 1]);
@@ -46,7 +45,18 @@ public class Day4 : Day<Place[]>
 
     protected override string RunBInternal()
     {
-        throw new NotImplementedException();
+        var sum = 0;
+
+        List<Place> hits;
+        do
+        {
+            CollectNeightbours();
+            hits = Input.Where(p => p.IsOccupied && p.NeighboursCount < 4).ToList();
+            sum += hits.Count;
+            hits.ForEach(h => h.IsOccupied = false);
+            Input.ToList().ForEach(h => h.NeighboursCount = 0);
+        } while (hits.Any());
+        return sum.ToString();
     }
 }
 
@@ -59,28 +69,17 @@ public class Place
 
     public bool IsOccupied { get; set; }
     public int NeighboursCount { get; set; }
-    public List<Place> Neighbours { get; set; } = [];
-    public int X { get; set; }
-    public int Y { get; set; }
 
     public void TalkTo(Place place)
     {
         if (IsOccupied)
         {
             place.NeighboursCount++;
-            //place.Neighbours.Add(this);
         }
 
         if (place.IsOccupied)
         {
             NeighboursCount++;
-            Neighbours.Add(place);
         }
-    }
-
-    public void MarkPosition(int x, int y)
-    {
-        X = x;
-        Y = y;
     }
 }

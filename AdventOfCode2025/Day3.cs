@@ -26,6 +26,7 @@ public class Day3 : Day<(int b, int i)[][]>
 
     protected override string RunBInternal()
     {
+        
         long sum = 0;
         foreach (var line in Input)
         {

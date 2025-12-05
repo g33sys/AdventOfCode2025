@@ -2,4 +2,4 @@
 
 using AdventOfCode2025;
 
-new Day4().Test().RunB().Out();
+new Day5().RunA().Out();

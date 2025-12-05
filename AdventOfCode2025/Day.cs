@@ -29,6 +29,7 @@ public abstract class Day<TInput>
         Lines = File.ReadAllLines(path);
     }
 
+
     public string RunA()
     {
         InitRun();
